@@ -1,11 +1,11 @@
-# Module: 00
-## Lab/Demo: 00
-### Task: 00
-#### Step: 00
+﻿# モジュール: 00
+## ラボ/デモ: 00
+### タスク: 00
+#### ステップ: 00
 
-Description of issue
+懸案事項の説明
 
-Repro steps:
+再現手順:
 
 1.
 1.
