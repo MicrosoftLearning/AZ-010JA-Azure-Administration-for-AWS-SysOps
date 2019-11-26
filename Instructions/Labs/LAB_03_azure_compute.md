@@ -58,7 +58,7 @@ lab:
 resourceGroupName='WestRG'
 location='westus'
 adminUserName='azuser'
-adminPassword='UniqueP@$$w0rd-Here' # make unique
+adminPassword='UniqueP@$$w0rd-Here' # 一意の値を作成する
 vmName='WestWinVM'
 vmSize='Standard_D1'
 availabilitySet='WestAS'
