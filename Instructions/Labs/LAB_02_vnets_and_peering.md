@@ -29,7 +29,7 @@ lab:
 
 #### セットアップ タスク
 
-1. **モジュール 1** から構成された EastRG および WestRG リソース グループ: **Azure Administration、Labリソース グループの作成**:
+1. **モジュール 1** から構成された EastRG および WestRG リソース グループ: **Azure 管理、Labリソース グループの作成**:
 
 ### エクササイズ 1: サブネットを使用して Virtual Network を作成する
 

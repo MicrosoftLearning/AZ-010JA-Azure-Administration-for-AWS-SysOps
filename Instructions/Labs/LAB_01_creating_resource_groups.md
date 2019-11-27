@@ -1,7 +1,7 @@
 ﻿---
 lab:
     title: 'リソース グループの作成'
-    module: 'モジュール 1: Azure Administration'
+    module: 'モジュール 1: Azure 管理'
 ---
 
 # ラボ 01: リソース グループの作成

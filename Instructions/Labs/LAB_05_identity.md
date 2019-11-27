@@ -1,7 +1,7 @@
 ﻿---
 lab:
     title: 'ユーザー、グループ、ポリシーと監視の作成'
-    module: 'モジュール 5: Azure Identity'
+    module: 'モジュール 5: Azure ID'
 ---
 
 # ラボ 01: Azure ID

@@ -1,10 +1,10 @@
 ﻿---
 lab:
     title: 'BLOB、セキュア アクセス ストレージ、サービス エンドポイント、File Storage'
-    module: 'モジュール 4: Azure Storage'
+    module: 'モジュール 4: Azure ストレージ'
 ---
 
-# ラボ 04: Azure Storage
+# ラボ 04: Azure ストレージ
 
 ストレージ アカウント、BLOB、セキュア アクセス ストレージ、サービス エンドポイント、File Storage
 
@@ -35,9 +35,9 @@ lab:
 #### セットアップ タスク
 
 1. **前のラボへの依存関係:**
-    1. モジュール 1: Azure Administration - **ラボ: リソース グループの作成**: EastRG および WestRG リソース グループが構成されました。
+    1. モジュール 1: Azure 管理 - **ラボ: リソース グループの作成**: EastRG および WestRG リソース グループが構成されました。
     1. モジュール 2: Azure ネットワーク - **ラボ仮想ネットワークとピアリング**: サブネットとピアリングが構成された VNet。
-    1. モジュール 3: Azure Compute - **ラボ: Azure VM**: EastDebianVM が作成されました。
+    1. モジュール 3: Azure コンピューティング - **ラボ: Azure VM**: EastDebianVM が作成されました。
 
 ### エクササイズ 1: BLOB、セキュア アクセス ストレージ、サービス エンドポイント、File Storage
 
