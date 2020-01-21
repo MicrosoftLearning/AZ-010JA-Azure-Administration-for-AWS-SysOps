@@ -33,7 +33,7 @@ Azure Cloud Shell CLI の概要
 
 1. Azure portal を使用してこのコースで使用する Azure アカウントを構成する手順については、コース インストラクターの指示に従ってください。
 
-### エクササイズ 1: Cloud Shell を使用して Azure CLI を開始し、2 つのリソース グループを作成する
+## エクササイズ 1: Cloud Shell を使用して Azure CLI を開始し、2 つのリソース グループを作成する
 
 このエクササイズの主なタスクは次のとおりです。
 
@@ -42,7 +42,7 @@ Azure Cloud Shell CLI の概要
 1. CLI コマンドを使用して WestRG リソース グループを作成する
 1. CLI コマンドを使用して EastRG リソース グループを作成する
 
-#### タスク 1: Cloud Shell を開く
+### エクササイズ 1 - タスク 1: Cloud Shell を開く
 
 **Azure Cloud Shell でサブスクリプションを設定する**
 
@@ -68,7 +68,7 @@ az account list --output table
 
 4. サブスクリプションの一覧を確認し、適切なサブスクリプションが "default `true`" とラベル付けされていることを確認します。
 
-#### タスク 2: CLI を使用して WestRG リソース グループを作成する
+### タスク 2: CLI を使用して WestRG リソース グループを作成する
 
 1. [**Cloud Shell**] コマンド プロンプトで、次のコマンドを入力して、westus リージョンに WestRG リソースグループを作成します。
 
@@ -84,7 +84,7 @@ az group list --output table
 
 3. 新規作成された WestRG が一覧表示されていることを確認します。
 
-#### タスク 3: CLI を使用して EastRG リソース グループを作成する
+### タスク 3: CLI を使用して EastRG リソース グループを作成する
 
 1. [**Cloud Shell**] コマンド プロンプトで、次のコマンドを入力して、eastus リージョンに EastRG リソースグループを作成します。
 

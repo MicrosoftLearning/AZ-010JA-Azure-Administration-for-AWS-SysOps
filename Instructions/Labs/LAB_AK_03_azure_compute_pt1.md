@@ -3,8 +3,9 @@
 ## 指示
 
 1. 以下の CLI スクリプトをメモ帳などのエディタにコピーする
-1. `# ----実行する前にこれらの値を編集する----` と名付けられたロケーション セクション
-1. 環境を表す値を編集し、ファイルをローカルに保存します。
+      1. `# ----EDIT THESE VALUES Before Running----` と名付けられたセクションを検索する
+      1. パスワードを編集すると、**エラー**が発生します。CLI コマンド ファイルを保存します
+      1. ファイルをローカルに保存する
 1. Azure ポータルにログインし、bash Cloud Shell を開きます。
 1. 依存関係が整っているかどうかを確認します (スクリプトのコメントの上部を参照)。
 1. ローカル ファイルから CLI スクリプトをコピーし、Bash Cloud Shell にスクリプトを貼り付けます。
@@ -26,10 +27,11 @@
 # ----------開始----------
 
 # ----実行する前にこれらの値を一意の値になるよう編集----
-adminUserName='azuser'
-adminPassword='UniqueP@$$w0rd-Here'
+#----パスワードの先頭の "!" を削除すると、エラーが発生します----
+adminPassword=!'UniqueP@$$w0rd-Here'
 
 # ----変数を指定----
+adminUserName='azuser'
 resourceGroupName='WestRG'
 location='westus'
 vmName='WestWinVM'
@@ -52,6 +54,9 @@ az vm create --name $vmName --resource-group $resourceGroupName \
   --location $location \
   --size $vmSize \
   --availability-set $availabilitySet
+  
+# VM を 1 分間待機する
+スリープ 60
 
 # ----ポートを開く----
 az vm open-port -g WestRG -n $vmName --port 80 --priority 1500
@@ -87,7 +92,6 @@ az vm create \
 --vnet-name WestVNet \
 --subnet WestSubnet1 \
 --availability-set WestAS \
---size 'Standard_D1' \
 --location westus \
 --name WestDebianVM \
 --generate-ssh-keys

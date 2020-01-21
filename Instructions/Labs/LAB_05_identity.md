@@ -1,12 +1,12 @@
 ﻿---
 lab:
-    title: 'ユーザー、グループ、ポリシーと監視の作成'
+    title: 'ユーザー、グループ、ポリシーの作成。ログとアラートの監視。'
     module: 'モジュール 5: Azure ID'
 ---
 
 # ラボ 01: Azure ID
 
-ユーザーとグループの作成、ポリシーと監視
+ユーザー、グループ、ポリシーの作成とログとアラートの監視
 
 ## 受講者ラボ マニュアル
 
@@ -18,13 +18,13 @@ lab:
 
 このラボを修了すると、次のことが可能になります:
 
-* ユーザーとグループを作成して構成する
+* Azure ロールベースのアクセス制御を使用してユーザーとグループを作成および構成する
 * ソフトウェアのインストールを制限するポリシーを作成する
 * Query Explorer を使用して Azure Portal の監視ログとアラートを確認する
 
 ## ラボのセットアップ
 
-* **予想時間**: 20 分
+* **予想時間**: 45 分
 
 ## 指示
 
@@ -32,72 +32,155 @@ lab:
 
 #### セットアップ タスク
 
-1. Azure portal を使用してこのコースで使用する Azure アカウントを構成する手順については、コース インストラクターの指示に従ってください。
+1. このコースで使用する Azure アカウントを構成します。
+2. **モジュール 1: Azure Administration, Lab: リソース グループの作成** WestRG リソース グループを構成します。
 
-### エクササイズ 1: Cloud Shell を使用して Azure CLI を開始し、2 つのリソース グループを作成する
+### エクササイズ 1: ユーザー、グループ、ポリシーの作成
 
 このエクササイズの主なタスクは次のとおりです。
 
-1. ユーザーとグループを追加する
-1. ソフトウェアのインストールを制限するポリシーを作成する
-1. 監視ログとアラートの確認
+1. ユーザーとグループを追加します。
+1. ソフトウェアのインストールを制限するポリシーを作成します。
 
-#### タスク 1: Cloud Shell を開く
+### 演習 1 - タスク 1: ユーザーとグループを追加する
 
-**Azure Cloud Shell でサブスクリプションを設定する**
+**ユーザーを追加する**
 
-1. ポータルの上部にある [**Cloud Shell**] アイコンをクリックして、[クラウド シェル] ペインを開きます。
+1. ユーザー ドメインの変数を作成します。
 
-1. Cloud Shell インターフェイスで、**Bash** を選択します。
+> eric@contoso.com のメール アドレスを使用すると、コマンドは 'my_domain=ericcontoso.onmicrosoft.com' になります。
+>
+> * *必要に応じてインストラクターに相談してください。*
 
-1. [**Cloud Shell**] コマンド プロンプトで、次のコマンドを入力し、**Enter** キーを押して、ポータル サインインに使用するアカウントに関連付けられているすべてのサブスクリプションを一覧表示します。
+2. ユーザー ドメインの変数を編集します。
 
-```bash
-az account list --output table
+```sh
+# ユーザー ドメインの変数を作成する
+# user@contoso.com =>  usercontoso.onmicrosoft.com
+
+my_domain=<email+service>.onmicrosoft.com
 ```
 
-1. サブスクリプションの一覧を確認し、ラベルが "default `true`" とラベル付けされている場合
-1. 目的のサブスクリプションに既定値が設定されていない場合は、既定のサブスクリプションをリセットします。
-1. **Cloud Shell** コマンド プロンプトで、**お好きなサブスクリプション ID** で次のコマンドを入力し、**Enter** キーを押して既定のサブスクリプションを設定します。
+**ユーザー アカウントを作成する**
 
-```bash
-# subscription ID またはサブスクリプション名とサブスクリプション値を置き換え
-az account set --subscription [1111a1a1-22bb-3c33-d44d-e5e555ee5eee]
-az account list --output table
+1. ユーザー アカウント名の作成
+
+```sh
+my_user_account=AZ010@$my_domain
 ```
 
-4. サブスクリプションの一覧を確認し、適切なサブスクリプションが "default `true`" とラベル付けされていることを確認します。
+2. 一意の強力なパスワードを作成します (パスワードの編集!)。
 
-#### タスク 2: CLI を使用して WestRG リソース グループを作成する
-
-1. [**Cloud Shell**] コマンド プロンプトで、次のコマンドを入力して、westus リージョンに WestRG リソースグループを作成します。
-
-```bash
-az group create --location westus --name WestRG --output table
+```sh
+# パスワードを一意に編集する (先頭の "!"またはエラーを削除する)
+az ad user create \
+    --display-name AZ010Tester \
+    --password !sTR0ngP@ssWorD543%* \
+    --user-principal-name $my_user_account
 ```
 
-2. **Cloud Shell** コマンド プロンプトで、次のコマンドを入力して、westus リージョンで利用可能なリソース グループを一覧表示します。
+3. 表示名、パスワード、--user-principal-name を書き留める
 
-```bash
-az group list --output table
+**ユーザーとグループの管理**
+
+1. AD ユーザーを一覧表示します。
+
+```sh
+az ad user list --output json | jq '.[] | {"userPrincipalName":.userPrincipalName, "objectId":.objectId}'
 ```
 
-3. 新規作成された WestRG が一覧表示されていることを確認します。
+2. 前のステップで作成したユーザーが一覧表示されます。
+3. すべてのロール割り当てを一覧表示します。
 
-#### タスク 3: CLI を使用して EastRG リソース グループを作成する
-
-1. [**Cloud Shell**] コマンド プロンプトで、次のコマンドを入力して、eastus リージョンに EastRG リソースグループを作成します。
-
-```bash
-az group create --location eastus --name EastRG --output table
+```sh
+az role assignment list --all -o table
 ```
 
-2. **Cloud Shell** コマンド プロンプトで、次のコマンドを入力して、eastus リージョンで利用可能なリソース グループを一覧表示します。
+4. このリストの初期状態に注意してください。
+5. リソース グループのロール割り当てを一覧表示します。
 
-```bash
-az group list --output table
+```sh
+az role assignment list --resource-group WestRG --output json | jq '.[] | {"principalName":.principalName, "roleDefinitionName":.roleDefinitionName, "scope":.scope}'
 ```
 
-3. 新しく作成された EastRG が一覧表示されていることを確認します。
+6. 新しいユーザーにロール (「所有者]) を追加します。
 
-> **結果**: このラボでは、既定の Azure サブスクリプションを構成し、次のラボでさらに使用する 2 つのリソース グループを作成しました。
+```sh
+az role assignment create --role "Owner" --assignee $my_user_account --resource-group WestRG
+
+#az role assignment create --role "Owner" --assignee <assignee object id> --resource-group <resource_group>
+```
+
+**ユーザーとグループの変更を確認する**
+
+1. リソース グループのロール割り当ての一覧表示を繰り返します (変更に注意)。
+
+```sh
+az role assignment list --resource-group WestRG --output json | jq '.[] | {"principalName":.principalName, "roleDefinitionName":.roleDefinitionName, "scope":.scope}'
+```
+
+2. 作成したユーザーのロールの割り当てを一覧表示します (変更に注意)。
+
+```sh
+az role assignment list --assignee $my_user_account -g WestRG #--output json | jq '.[] | {"principalName":.principalName, "roleDefinitionName":.roleDefinitionName, "scope":.scope}'
+```
+
+## タスク 2 – ソフトウェアのインストールを制限するポリシーを作成する
+
+**ソフトウェア制限ポリシーをデプロイする**
+
+> *[Github](https://github.com/Azure/azure-policy/tree/master/samples/built-in-policy/require-sqlserver-version12) のスクリプト下で使用される rules.json と parameters.json を確認する*
+
+1. ポリシー定義を作成します。
+
+```sh
+az policy definition create --name 'require-sqlserver-version12' \
+    --display-name 'Require SQL Server version 12.0' \
+    --description 'This policy ensures all SQL servers use version 12.0.' \
+    --rules 'https://raw.githubusercontent.com/Azure/azure-policy/master/samples/built-in-policy/require-sqlserver-version12/azurepolicy.rules.json' \
+    --params 'https://raw.githubusercontent.com/Azure/azure-policy/master/samples/built-in-policy/require-sqlserver-version12/azurepolicy.parameters.json' \
+    --mode All
+```
+
+2. サブスクリプションレベルの範囲。
+
+```sh
+az policy assignment create --name SQL12AZ010 \
+    --display-name 'Require SQL Server version 12.0 - subscription scope' \
+    --scope '/subscriptions/'$subscriptionID \
+    --policy 'require-sqlserver-version12'
+```
+
+3. ポリシーの割り当てを一覧表示します。
+
+```sh
+az policy assignment list
+```
+
+4. 新しく作成したポリシーを表示します。
+
+```sh
+az policy assignment show --name 'SQL12AZ010'
+```
+
+**コンプライアンスの確認**
+
+1. Azure Policy サービス ページに戻ります。
+2. 「コンプライアンス] を選択します。コンプライアンス状態フィルタを「すべてのコンプライアンス状態 *(All compliance states)]に設定します。
+3. ポリシーのステータスと定義を確認します。
+## 演習 2: Query Explorer を使用してログとアラートを監視する
+
+1. ログとアラートの監視
+
+### 演習 2 - タスク 1 – ログとアラートの監視を確認する
+
+**デモンストレーション環境へのアクセス**
+
+1. 新しいブラウザー タブで、[Log Analytics Querying Demonstration](https://portal.loganalytics.io/demo) に移動します。
+2. クエリ エクスプローラの使用
+    1. 「クエリ エクスプローラ] を選択します (右上)。
+    2. 「お気に入り] を展開し、*エラーのあるすべての Syslog レコード*を選択します。
+    3. クエリが編集ペインに追加されることに注意してください。クエリの構造に注意してください。
+    4. クエリを実行します。返されたレコードを調べます。
+    5. インストラクターの追加手順に従います。
+    6. 時間があれば、他のお気に入りや保存済みクエリを試しましょう。

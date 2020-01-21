@@ -34,7 +34,7 @@ lab:
     1. モジュール 1: Azure 管理 - **ラボ: リソース グループの作成**。EastRG および WestRG リソース グループが構成されました。
     1. モジュール 2: Azure ネットワーク - **ラボ仮想ネットワークとピアリング**: サブネットとピアリングが構成された VNet。
 
-### エクササイズ 1: 可用性セット内で構成された VM を作成する
+## エクササイズ 1: 可用性セット内で構成された VM を作成する
 
 このエクササイズの主なタスクは次のとおりです。
 
@@ -42,7 +42,7 @@ lab:
 1. Windows 仮想マシンを作成する
 1. Linux Debian 仮想マシンの作成
 
-#### タスク 1: Windows 仮想マシンを作成する
+### エクササイズ 1 - タスク 1: Windows 仮想マシンを作成する
 
 * 可用性セットの作成
 * Create Windows Server 2016 DataCenter VM
@@ -52,13 +52,13 @@ lab:
 
 1. **Cloud Shell** コマンド プロンプトで、次のコマンドを入力し、**Enter** キーを押して、次のスクリプトで使用する変数を作成します。
 
-> **注**: 一意のパスワードを作成し、書き留めましょう
+> **注**: 一意のパスワードを作成し、それを書き留めます (パスワードの先頭の "!" を削除してください。そうしないと、エラーが発生します)
 
 ```sh
 resourceGroupName='WestRG'
 location='westus'
 adminUserName='azuser'
-adminPassword='UniqueP@$$w0rd-Here' # 一意の値を作成する
+adminPassword=!'UniqueP@$$w0rd-Here' # "!" を削除してください。そうしないと、エラーが発生します + 一意にしてください
 vmName='WestWinVM'
 vmSize='Standard_D1'
 availabilitySet='WestAS'
@@ -104,7 +104,7 @@ az vm open-port -g WestRG -n $vmName --port 3389 --priority 2000
 2. WestWinVM を含むリソースに注意してください
 3. Azure Advisor を起動し、推奨事項に注意してください
 
-#### タスク 2: WestWinVM を Web サーバーとして構成し、Ping を許可する
+### タスク 2: WestWinVM を Web サーバーとして構成し、Ping を許可する
 
 **ICMPv4-In を許可する (PowerShell を実行している Bash CLI)**
 
@@ -144,7 +144,7 @@ az vm show -d -g $resourceGroupName -n $vmName --query publicIps -o tsv
 
 2. 結果の IP アドレスを Web ブラウザーに貼り付け、IIS の既定ページが存在することを確認します。
 
-#### タスク 3: DNS で構成された Debian 仮想マシンを作成する
+### タスク 3: DNS で構成された Debian 仮想マシンを作成する
 
 Cloud Shell で 2 つの Debian 仮想サーバーを作成し、SSH を使用してサーバーに接続する
 
@@ -169,7 +169,6 @@ Cloud Shell で 2 つの Debian 仮想サーバーを作成し、SSH を使用�
 ```sh
 az vm create \
 --image credativ:Debian:8:latest \
---size 'Standard_D1' \
 --admin-username azuser \
 --resource-group WestRG \
 --vnet-name WestVNet \
@@ -243,7 +242,7 @@ az vm get-instance-view --name WestDebianVM --resource-group WestRG --query inst
 az vm get-instance-view --name EastDebianVM --resource-group EastRG --query instanceView.statuses[1] --output table
 ```
 
-#### タスク 4: SSH と Ping テスト WestWinVM を使用して WestDebianVM に接続する。
+### タスク 4: SSH と Ping テスト WestWinVM を使用して WestDebianVM に接続する。
 
 **West リソース グループの Debian 仮想マシンに接続する**
 
@@ -270,6 +269,7 @@ ssh azuser@<PUBLIC IP address of West Debian VM>
 > *両方同じ **非公開** VNet上にあるため、これは通常機能します。*
 
 1. WestWinVM IP アドレスを使用して、次のコマンドを編集し、Cloud Shell SSH セッションに入力して、WestWinVM に Ping を実行します。
+1. **`ctrl+c`** を押して bash で ping を終了する (ssh セッション)
 
 ```sh
 ping <PRIVATE IP address of the Windows server>
@@ -280,6 +280,7 @@ ping <PRIVATE IP address of the Windows server>
 1. EastDebianVM IP アドレスを使用して、次のコマンドを編集し、Cloud Shell SSH セッションに入力して、WestWinVM に Ping を実行します。
 
 > *これは、既に VNet ピアリングが構成されているため、通常機能します。*
+2. **`ctrl+c`** を押して bash で ping を終了する (ssh セッション)
 
 ```sh
 ping <PRIVATE IP address of eastdebianvm>
@@ -287,7 +288,7 @@ ping <PRIVATE IP address of eastdebianvm>
 
 > **注**: `exit` を入力して、SSH を終了します。
 
-### エクササイズ 2: Ubuntu スケール セットの作成とテスト
+## エクササイズ 2: Ubuntu スケール セットの作成とテスト
 
 このエクササイズの主なタスクは次のとおりです。
 
@@ -295,7 +296,7 @@ ping <PRIVATE IP address of eastdebianvm>
 1. ルールで自動スケーリング アウトと自動スケーリング インを作成する
 1. Ubuntu スケール セットをテストする (オプション)
 
-#### タスク 1: Ubuntu スケール セットを作成する
+### エクササイズ 2 - タスク 1: Ubuntu スケール セットを作成する
 
 **スケール セット リソース グループを作成する**
 
@@ -369,7 +370,7 @@ az monitor autoscale rule create \
 
 > *注: 「scale in」は最短 2 分で発生しうるので、以下の結果は最初の数分で異なると予想されます*
 
-#### タスク 2: Ubuntu スケール セットをテストする (オプション タスク)
+### タスク 2: Ubuntu スケール セットをテストする (オプション タスク)
 
 > このタスクは、スケール セットの動作を示すテストとして、サーバーに対する CPU 負荷を生成します。
 

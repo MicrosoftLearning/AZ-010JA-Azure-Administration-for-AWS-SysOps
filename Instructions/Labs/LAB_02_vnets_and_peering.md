@@ -31,7 +31,7 @@ lab:
 
 1. **モジュール 1** から構成された EastRG および WestRG リソース グループ: **Azure 管理、Labリソース グループの作成**:
 
-### エクササイズ 1: サブネットを使用して Virtual Network を作成する
+## エクササイズ 1: サブネットを使用して Virtual Network を作成する
 
 このエクササイズの主なタスクは次のとおりです。
 
@@ -40,7 +40,7 @@ lab:
 1. サブネットを使用して East VNet を作成する
 1. East ネットワークとサブネットが作成されたことを確認する。
 
-#### タスク 1 サブネットを使用して West VNet を作成する
+### エクササイズ 1 - タスク 1: サブネットを使用して West VNet を作成する
 
 1. [**Cloud Shell**] コマンド プロンプトで、次のコマンドを入力して、WestSubNet1 サブネットを使用して WestVNet 仮想ネットワークを作成します。
 
@@ -65,7 +65,7 @@ az network vnet list --output table
 az network vnet subnet list --resource-group WestRG --vnet-name WestVNet --output table
 ```
 
-#### タスク 2 サブネットを使用して East VNet を作成する
+### タスク 2: サブネットを使用して East VNet を作成する
 
 1. [**Cloud Shell**] コマンド プロンプトで、次のコマンドを入力して、EastSubNet1 サブネットを使用して EastVNet 仮想ネットワークを作成します。
 
@@ -101,7 +101,7 @@ az network vnet list --output table
 az network vnet subnet list --resource-group EastRG --vnet-name EastVNet --output table
 ```
 
-#### タスク 3: ピアリング ネットワーク West to East を作成する
+### タスク 3: ピアリング ネットワーク West to East を作成する
 
 1. `remote-vnet-id` CLI コマンドを使用して、West VNet と East VNet 間のピアリングを作成する
 1. [**Cloud Shell**] コマンド プロンプトで、次のコマンドを入力して、変数に EastVNet ID をキャプチャします。
@@ -137,7 +137,7 @@ az network vnet peering list \
   --output table
 ```
 
-#### タスク 4: ピアリング ネットワーク East to West を作成する
+### タスク 4: ピアリング ネットワーク East to West を作成する
 
 1. 変数で WestVNet ID をキャプチャする
 
