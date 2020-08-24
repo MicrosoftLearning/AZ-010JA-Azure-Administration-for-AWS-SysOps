@@ -1,4 +1,4 @@
-﻿---
+---
 lab:
     title: 'BLOB、セキュア アクセス ストレージ、サービス エンドポイント、File Storage'
     module: 'モジュール 4: Azure ストレージ'
