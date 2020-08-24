@@ -1,4 +1,4 @@
-﻿---
+---
 title: オンラインでホストされる手順
 permalink: index.html
 layout: home
