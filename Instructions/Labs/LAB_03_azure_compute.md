@@ -1,4 +1,4 @@
-﻿---
+---
 lab:
     title: 'Azure VM と スケール セット'
     module: 'モジュール 3: Azure コンピューティング'
