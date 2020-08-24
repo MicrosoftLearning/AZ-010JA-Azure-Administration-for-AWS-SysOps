@@ -1,7 +1,7 @@
 ﻿---
 title: オンラインでホストされる手順
 permalink: index.html
-layout: ホーム
+layout: home
 ---
 
 # コンテンツ ディレクトリ
