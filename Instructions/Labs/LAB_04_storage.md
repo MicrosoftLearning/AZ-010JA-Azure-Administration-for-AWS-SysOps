@@ -88,7 +88,7 @@ az storage account create \
     --kind $my_storage_kind \
     --access-tier $my_access_tier \
     --sku $my_storage_sku \
-    --encryption $my_storage_encryption
+    --encryption-services $my_storage_encryption
 ```
 
 **Bash CLI で環境変数を設定する**
@@ -208,7 +208,7 @@ touch uploadfiles/myfile.txt
 
 ```sh
 # REPLACE <name>
-az_user_name=<name>
+az_user_name='<name>'
 ```
 
 4. アップロード パスとフォルダを作成する
@@ -594,7 +594,7 @@ az storage account update -n $my_storage_account --https-only true
 
 ```sh
 # eastDebianVM SSH から
-cd /mnt/$my_storage_account
+cd /mnt/eastfiles
 ```
 
 3. Azure File Storage から VM に共有されているファイルを表示する
