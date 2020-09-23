@@ -60,7 +60,7 @@ location='westus'
 adminUserName='azuser'
 adminPassword=!'UniqueP@$$w0rd-Here' # "!" を削除してください。そうしないと、エラーが発生します + 一意にしてください
 vmName='WestWinVM'
-vmSize='Standard_D1'
+vmSize='Standard_D2_v3'
 availabilitySet='WestAS'
 ```
 
