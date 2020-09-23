@@ -60,7 +60,7 @@ location='westus'
 adminUserName='azuser'
 adminPassword=!'UniqueP@$$w0rd-Here' # "!" を削除してください。そうしないと、エラーが発生します + 一意にしてください
 vmName='WestWinVM'
-vmSize='Standard_D1'
+vmSize='Standard_D2_v3'
 availabilitySet='WestAS'
 ```
 
@@ -169,6 +169,7 @@ Cloud Shell で 2 つの Debian 仮想サーバーを作成し、SSH を使用�
 ```sh
 az vm create \
 --image credativ:Debian:8:latest \
+--size 'Standard_D2_v3' \
 --admin-username azuser \
 --resource-group WestRG \
 --vnet-name WestVNet \
@@ -200,7 +201,7 @@ az vm availability-set create --name EastAS --resource-group EastRG
 ```sh
 az vm create \
 --image credativ:Debian:8:latest \
---size 'Standard_D1' \
+--size 'Standard_D2_v3' \
 --admin-username azuser \
 --resource-group EastRG \
 --vnet-name EastVNet \
@@ -403,6 +404,7 @@ ssh azuser@<instance 0 IP> -p 50000
 1. SSH セッションで次のコマンドを入力して、ストレス アプリケーションをインストールします (240 秒でタイムアウト)
 
 ```sh
+sudo apt-get update
 sudo apt-get -y install stress
 sudo stress --cpu 10 --timeout 240 &
 ```
