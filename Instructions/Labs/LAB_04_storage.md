@@ -625,7 +625,7 @@ exit
 1. ストレージ アカウントを削除する
 
 ```sh
-az storage account delete -n $my_storage_account -g my_resource_group
+az storage account delete -n $my_storage_account -g $my_resource_group
 ```
 
 
